@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dossiê Interruptor</title>
+<meta name="robots" content="noindex, nofollow">
+
+<!-- TROQUE AQUI pelo link da sua VSL -->
+<link rel="prefetch" href="../vsl1/">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Manrope:wght@400;500;700;800&family=Space+Mono:wght@400;700&display=swap">
+
+<!-- (Opcional) Cole aqui seu Pixel do Facebook / Google Tag / UTMify -->
+
+<style>
+  :root{
+    --bg:#110d0c;
+    --surface:#1c1613;
+    --surface-2:#271e19;
+    --border:rgba(246,240,234,0.10);
+    --border-strong:rgba(246,240,234,0.18);
+    --accent:#d21f2f;
+    --accent-bright:#ff4b52;
+    --text:#f6f0ea;
+    --text-muted:#a89890;
+    --text-faint:#6f6259;
+    --font-display:'Anton', Impact, 'Arial Narrow', sans-serif;
+    --font-body:'Manrope', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    --font-mono:'Space Mono', 'Courier New', monospace;
+  }
+
+  *{ box-sizing:border-box; }
+
+  html{ background:var(--bg); }
+
+  body{
+    margin:0;
+    background:
+      radial-gradient(ellipse 60% 40% at 50% 0%, rgba(210,31,47,0.16), transparent 60%),
+      repeating-linear-gradient(135deg, rgba(246,240,234,0.02) 0px, rgba(246,240,234,0.02) 2px, transparent 2px, transparent 14px),
+      var(--bg);
+    color:var(--text);
+    font-family:var(--font-body);
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:flex-start;
+    padding:32px 16px;
+    padding-block:32px;
+  }
+
+  .stage{
+    width:100%;
+    max-width:440px;
+    display:flex;
+    justify-content:center;
+  }
+
+  .card{
+    position:relative;
+    width:100%;
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:14px;
+    box-shadow:0 30px 60px -20px rgba(0,0,0,0.6), 0 0 0 1px rgba(0,0,0,0.2);
+    overflow:hidden;
+  }
+
+  .card::after{
+    content:"";
+    position:absolute;
+    top:0; right:0;
+    width:0; height:0;
+    border-style:solid;
+    border-width:0 26px 26px 0;
+    border-color:transparent var(--bg) transparent transparent;
+    filter:drop-shadow(-1px 1px 0 var(--border-strong));
+  }
+
+  .ribbon{
+    background:linear-gradient(180deg, var(--accent), #ad1622);
+    color:#fff6f4;
+    font-family:var(--font-mono);
+    font-size:12px;
+    font-weight:700;
+    letter-spacing:0.03em;
+    text-align:center;
+    padding:10px 40px 10px 14px;
+    line-height:1.4;
+  }
+
+  .progress-row{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:14px 18px 0 18px;
+  }
+
+  .progress-track{
+    flex:1;
+    height:6px;
+    background:var(--surface-2);
+    border-radius:999px;
+    overflow:hidden;
+  }
+
+  .progress-fill{
+    height:100%;
+    width:25%;
+    background:linear-gradient(90deg, var(--accent), var(--accent-bright));
+    border-radius:999px;
+    transition:width 500ms ease;
+  }
+
+  .progress-pct{
+    font-family:var(--font-mono);
+    font-size:12px;
+    color:var(--text-muted);
+    font-variant-numeric:tabular-nums;
+    white-space:nowrap;
+    text-align:right;
+  }
+
+  .steps{
+    position:relative;
+    padding:22px 22px 26px 22px;
+  }
+
+  .step{
+    display:none;
+    flex-direction:column;
+    align-items:flex-start;
+    gap:16px;
+  }
+
+  .step.is-active{
+    display:flex;
+    animation:stepIn 420ms ease both;
+  }
+
+  @keyframes stepIn{
+    from{ opacity:0; transform:translateY(10px); }
+    to{ opacity:1; transform:translateY(0); }
+  }
+
+  .case-no{
+    font-family:var(--font-mono);
+    font-size:11px;
+    letter-spacing:0.08em;
+    color:var(--text-faint);
+    text-transform:uppercase;
+  }
+
+  .stamp{
+    position:absolute;
+    top:64px;
+    right:22px;
+    font-family:var(--font-mono);
+    font-weight:700;
+    font-size:12px;
+    letter-spacing:0.06em;
+    color:var(--accent-bright);
+    border:2px dashed rgba(255,75,82,0.55);
+    padding:5px 9px;
+    border-radius:4px;
+    transform:rotate(9deg);
+    text-transform:uppercase;
+  }
+
+  .headline{
+    font-family:var(--font-display);
+    font-weight:400;
+    text-transform:uppercase;
+    font-size:clamp(26px, 7vw, 32px);
+    line-height:1.12;
+    letter-spacing:0.005em;
+    text-wrap:balance;
+    margin:0;
+  }
+
+  .hl-accent{
+    color:var(--accent-bright);
+    position:relative;
+    display:inline-block;
+  }
+
+  .step.is-active .hl-accent::before{
+    content:"";
+    position:absolute;
+    inset:-2px -4px;
+    background:#0a0808;
+    transform-origin:right;
+    animation:redactWipe 700ms 260ms cubic-bezier(.7,0,.3,1) both;
+  }
+
+  @keyframes redactWipe{
+    from{ transform:scaleX(1); }
+    to{ transform:scaleX(0); }
+  }
+
+  .body-text{
+    font-size:15px;
+    line-height:1.55;
+    color:var(--text-muted);
+    margin:0;
+    max-width:65ch;
+  }
+
+  .body-text strong{
+    color:var(--text);
+    font-weight:700;
+  }
+
+  .cta{
+    width:100%;
+    border:none;
+    border-radius:10px;
+    background:linear-gradient(180deg, var(--accent-bright), var(--accent));
+    color:#fff8f7;
+    font-family:var(--font-body);
+    font-weight:800;
+    font-size:16px;
+    padding:16px 18px;
+    cursor:pointer;
+    box-shadow:0 12px 24px -10px rgba(210,31,47,0.55);
+    transition:transform 150ms ease, box-shadow 150ms ease, filter 150ms ease;
+  }
+
+  .cta:hover{ filter:brightness(1.06); transform:translateY(-1px); }
+  .cta:active{ transform:translateY(0); filter:brightness(0.96); }
+
+  .cta:focus-visible{
+    outline:2px solid var(--text);
+    outline-offset:3px;
+  }
+
+  .fine-print{
+    font-family:var(--font-mono);
+    font-size:11.5px;
+    color:var(--text-faint);
+    letter-spacing:0.02em;
+  }
+
+  .back-link{
+    background:none;
+    border:none;
+    color:var(--text-faint);
+    font-family:var(--font-mono);
+    font-size:12px;
+    cursor:pointer;
+    padding:0 22px 20px 22px;
+  }
+
+  .back-link:hover{ color:var(--text-muted); }
+  .back-link:focus-visible{ outline:2px solid var(--text-faint); outline-offset:2px; }
+
+  @media (prefers-reduced-motion: reduce){
+    .step.is-active{ animation:none; }
+    .step.is-active .hl-accent::before{ animation:none; transform:scaleX(0); }
+    .cta{ transition:none; }
+    .progress-fill{ transition:none; }
+  }
+
+  @media (max-width:380px){
+    .stamp{ display:none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="stage">
+  <div class="card">
+    <div class="ribbon">⚠️ ESTE DOSSIÊ SAI DO AR HOJE — ACESSO TEMPORÁRIO</div>
+
+    <div class="progress-row">
+      <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+      <span class="progress-pct" id="progressPct">Passo 1 de 4</span>
+    </div>
+
+    <div class="steps" id="steps">
+      <section class="step is-active" data-step="1">
+        <span class="case-no">Dossiê Nº 0451-ED · Acesso nível 3</span>
+        <div class="stamp">Confidencial</div>
+        <h1 class="headline">Protocolo exclusivo para fazer <span class="hl-accent">qualquer mulher feliz</span> na cama</h1>
+        <p class="body-text">O <strong>Efeito Interruptor do Orgasmo</strong> já saiu do ar <strong>6 vezes</strong>. Comprometa-se a assistir até o fim e aplicar o passo a passo.</p>
+        <button class="cta" data-next>Sim, eu me comprometo</button>
+        <span class="fine-print">🔒 Acesso restrito — não compartilhe este link</span>
+      </section>
+
+      <section class="step" data-step="2">
+        <span class="case-no">Verificação de acesso</span>
+        <h1 class="headline">Confirme: você tem <span class="hl-accent">18 anos ou mais</span> e está sozinho(a) agora?</h1>
+        <p class="body-text">Uma técnica que elimina a ejaculação precoce sem remédio, sem pomada e sem gastar 1 real.</p>
+        <button class="cta" data-next>Sim, tenho 18+ e estou sozinho(a)</button>
+      </section>
+
+      <section class="step" data-step="3">
+        <span class="case-no">Último aviso antes da liberação</span>
+        <h1 class="headline"><span class="hl-accent">+14.000 homens</span> já aplicaram este protocolo</h1>
+        <p class="body-text">Nenhum deles vive mais o pesadelo de acabar rápido demais. Só libero pra quem for até o fim.</p>
+        <button class="cta" data-next>Vou aplicar hoje — liberar acesso</button>
+      </section>
+
+      <section class="step" data-step="4">
+        <span class="case-no">Acesso liberado</span>
+        <h1 class="headline">Seu dossiê foi <span class="hl-accent">desbloqueado</span></h1>
+        <p class="body-text">Assista até o fim agora, antes que saia do ar de novo. Pode mudar sua vida sexual hoje.</p>
+        <button class="cta" id="finalCta">Assistir agora</button>
+        <span class="fine-print">⏳ Link ativo por tempo limitado</span>
+      </section>
+    </div>
+
+    <button class="back-link" id="backBtn" hidden>‹ voltar</button>
+  </div>
+</div>
+
+<script>
+(function(){
+  // TROQUE AQUI pelo link da sua VSL (as UTMs da URL são repassadas automaticamente)
+  var VSL_URL = "../vsl1/";
+
+  var steps = Array.prototype.slice.call(document.querySelectorAll('.step'));
+  var total = steps.length;
+  var current = 0;
+  var fill = document.getElementById('progressFill');
+  var pct = document.getElementById('progressPct');
+  var backBtn = document.getElementById('backBtn');
+  var firedSteps = {};
+
+  function render(){
+    steps.forEach(function(s, i){
+      s.classList.toggle('is-active', i === current);
+    });
+    var p = Math.round(((current + 1) / total) * 100);
+    fill.style.width = p + '%';
+    pct.textContent = 'Passo ' + (current + 1) + ' de ' + total;
+    backBtn.hidden = current === 0;
+
+    var stepNumber = current + 1;
+    if (!firedSteps[stepNumber]){
+      firedSteps[stepNumber] = true;
+      if (typeof fbq === 'function') { fbq('trackCustom', 'ViewStep' + stepNumber); }
+      if (typeof gtag === 'function') { gtag('event', 'view_step', { step_number: stepNumber }); }
+    }
+  }
+
+  document.querySelectorAll('[data-next]').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      if (current < total - 1){
+        current++;
+        render();
+      }
+    });
+  });
+
+  backBtn.addEventListener('click', function(){
+    if (current > 0){
+      current--;
+      render();
+    }
+  });
+
+  document.getElementById('finalCta').addEventListener('click', function(){
+    if (typeof fbq === 'function') { fbq('track', 'Lead'); }
+    if (typeof gtag === 'function') { gtag('event', 'generate_lead'); }
+
+    var redirectUrl = VSL_URL;
+    if (window.location.search){
+      redirectUrl += (VSL_URL.indexOf('?') === -1 ? '?' : '&') + window.location.search.slice(1);
+    }
+
+    setTimeout(function(){ window.location.href = redirectUrl; }, 200);
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>

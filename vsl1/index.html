@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>vsl1</title>
+<meta name="robots" content="noindex, nofollow">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700;800&display=swap">
+
+<!-- (Opcional) Cole aqui seu Pixel do Facebook / Google Tag / UTMify -->
+
+<!-- Pré-carregamento do player Wistia -->
+<link rel="preconnect" href="https://fast.wistia.com">
+<link rel="preconnect" href="https://embed-ssl.wistia.com">
+<link rel="preload" href="https://fast.wistia.com/player.js" as="script">
+
+<style>
+  *{ box-sizing:border-box; }
+
+  html, body{
+    margin:0;
+    padding:0;
+    background:#F9F9F2;
+    color:#333;
+    font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+    font-size:16px;
+  }
+
+  /* faixa clara do topo (container vazio do original) */
+  .top-strip{ height:40px; background:#F9F9F2; }
+
+  /* banner vermelho */
+  .banner-wrap{
+    background:#9E0000;
+    padding:0 10px;
+  }
+  #banner-aula{
+    max-width:1140px;
+    margin:0 auto;
+    background:#9E0000;
+    color:#fff;
+    padding:6px;
+    text-align:center;
+    font-size:18px;
+    font-weight:bold;
+    line-height:1.5;
+    min-height:59px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  #banner-aula span{ margin-left:.3em; }
+
+  /* área da VSL */
+  .vsl-section{
+    background:#F9F9F2;
+    min-height:100vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:flex-start;
+    padding:50px 0 49px;
+    gap:20px;
+  }
+
+  .player-wrap{
+    width:100%;
+    max-width:400px;
+    margin:0 auto;
+  }
+
+  /* Headline (no original ela vem configurada dentro do player vturb).
+     Se o seu player já tiver headline, apague este bloco <h1>. */
+  .vsl-headline{
+    font-family:'Open Sans', Arial, sans-serif;
+    font-weight:400;
+    font-size:22px;
+    line-height:1.3;
+    color:#222;
+    text-align:center;
+    margin:0 0 16px;
+    padding:0 6px;
+  }
+  .vsl-headline .tag{
+    background:#ff0000;
+    color:#fff;
+    font-weight:800;
+    padding:0 4px;
+  }
+  .vsl-headline b{ font-weight:800; }
+  .vsl-headline .red{ color:#ff0000; font-weight:800; }
+
+  /* Placeholder do vídeo — some quando você colar o embed */
+  .video-placeholder{
+    width:100%;
+    aspect-ratio:9/16;
+    background:#ff0000;
+    color:#fff;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    font-family:'Open Sans', Arial, sans-serif;
+    font-weight:700;
+    text-align:center;
+    padding:20px;
+  }
+  .video-placeholder small{ font-weight:400; opacity:.85; }
+
+  #viewers{
+    font-family:Arial, sans-serif;
+    font-size:16px;
+    font-weight:bold;
+    color:#333;
+    align-self:center;
+  }
+  #count{ transition:opacity .3s; }
+
+  @media (max-width:767px){
+    .vsl-section{
+      min-height:876px;
+      justify-content:center;
+      gap:12px;
+      padding:0 0 50px;
+    }
+    .player-wrap{ width:89%; max-width:89%; }
+    .vsl-headline{ font-size:20px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="top-strip"></div>
+
+<div class="banner-wrap">
+  <div id="banner-aula">Essa aula sai do ar hoje, dia <span id="data-hoje">carregando...</span></div>
+</div>
+
+<section class="vsl-section">
+  <div class="player-wrap">
+
+    <h1 class="vsl-headline">
+      <span class="tag">FOI REVELADO:</span> O <b>truque diário de 15 minutos</b> que já libertou mais de 4 mil homens da <span class="red">ejaculação precoce</span>
+    </h1>
+
+    <!-- ===== EMBED DA VSL (Wistia) ===== -->
+    <script src="https://fast.wistia.com/player.js" async></script>
+    <script src="https://fast.wistia.com/embed/b15yaef3jb.js" async type="module"></script>
+    <style>wistia-player[media-id='b15yaef3jb']:not(:defined) { background: center / contain no-repeat url('https://fast.wistia.com/embed/medias/b15yaef3jb/swatch'); display: block; filter: blur(5px); padding-top:178.06%; }</style>
+    <wistia-player media-id="b15yaef3jb" aspect="0.5616224648985959"></wistia-player>
+    <!-- ===== FIM DO EMBED ===== -->
+
+  </div>
+
+  <div id="viewers">
+    🟢 <span id="count">355</span> pessoas estão assistindo isso...
+  </div>
+</section>
+
+<script>
+  // Data de hoje no banner
+  (function(){
+    var el = document.getElementById("data-hoje");
+    var hoje = new Date();
+    var dia = String(hoje.getDate()).padStart(2, '0');
+    var mes = String(hoje.getMonth() + 1).padStart(2, '0');
+    el.textContent = dia + "/" + mes + "/" + hoje.getFullYear();
+  })();
+
+  // Contador de pessoas assistindo
+  (function(){
+    var count = 355;
+    var min = 320, max = 410;
+    var el = document.getElementById("count");
+    function update(){
+      count += Math.floor(Math.random() * 8) - 3; // varia entre -3 e +4
+      count = Math.max(min, Math.min(max, count));
+      el.style.opacity = 0.4;
+      setTimeout(function(){ el.textContent = count; el.style.opacity = 1; }, 150);
+      setTimeout(update, 2000 + Math.random() * 3000); // a cada 2 a 5s
+    }
+    update();
+  })();
+</script>
+</body>
+</html>
