@@ -9,7 +9,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Poppins:wght@400;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Poppins:wght@400;700;800&display=swap">
 
 <!-- (Opcional) Cole aqui seu Pixel do Facebook / UTMify -->
 
@@ -54,9 +54,10 @@
 
   /* Headline (caixa branca acima do vídeo) */
   .vsl-headline{
-    max-width:320px;
+    width:fit-content;
+    max-width:100%;
     margin:0 auto 1.25rem;
-    padding:20px 16px 22px;
+    padding:18px 16px 20px;
     background:#fff;
     font-family:'Poppins', 'Montserrat', sans-serif;
     text-transform:uppercase;
@@ -64,9 +65,10 @@
   }
   .vsl-headline .title{
     margin:0;
-    font-weight:700;
-    font-size:18px;
-    line-height:1.45;
+    font-weight:800;
+    font-size:clamp(16px, 5.6vw, 25px);
+    line-height:1.32;
+    letter-spacing:.01em;
   }
   .vsl-headline .title .red{ color:#ff3b3b; }
   .vsl-headline .sub{
@@ -196,8 +198,7 @@
 
   <div class="header-container">
     <div class="vsl-headline">
-      <p class="title"><span class="red">Milhares de pessoas</span> estão eliminando o <span class="red">zumbido</span> e recuperando sua <span class="red">audição</span> com essa <span class="red">descoberta</span></p>
-      <p class="sub">(Sem remédios nem aparelho)</p>
+      <p class="title"><span class="red">Milhares</span> de pessoas<br>estão eliminando o<br><span class="red">zumbido</span> e recuperando<br>sua <span class="red">audição</span> com essa<br><span class="red">descoberta</span></p>
     </div>
 
     <div class="player-container">
