@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<title>Assista ao vídeo</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="noindex, nofollow">
+<link rel="shortcut icon" href="images/favicon.png" type="image/x-icon">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Poppins:wght@400;700&display=swap">
+
+<!-- (Opcional) Cole aqui seu Pixel do Facebook / UTMify -->
+
+<!-- Backredirect: coloque o link para onde mandar quem tentar voltar. Vazio = desativado -->
+<script>
+  const BACK_REDIRECT_URL = '';
+
+  (function setBackRedirect(url){
+    if (!url) return;
+    var urlBackRedirect = url.trim() + (url.indexOf('?') > 0 ? '&' : '?') + document.location.search.replace('?', '');
+    history.pushState({}, '', location.href);
+    history.pushState({}, '', location.href);
+    history.pushState({}, '', location.href);
+    window.addEventListener('popstate', function(){
+      setTimeout(function(){ location.href = urlBackRedirect; }, 1);
+    });
+  })(BACK_REDIRECT_URL);
+</script>
+
+<style>
+  *{ box-sizing:border-box; }
+  html,body,button,input,select,textarea{ background-color:#f5f5f5; font-family:"Montserrat",sans-serif; }
+  body{ margin:0; }
+  img{ display:block; max-width:100%; height:auto; }
+  p{ margin:1em 0; }
+
+  header,section,footer{ padding:1.25rem; }
+
+  /* ===== Topo ===== */
+  header{ margin:0 auto; padding:0; text-align:center; }
+  header .header-container{ max-width:56.25rem; margin:0 auto; padding:0 1.25rem 1.25rem; }
+  header h3{
+    margin:0 auto 1.5rem;
+    padding:.9375rem .625rem;
+    background-color:darkred;
+    color:#fff;
+    font-size:.95rem;
+    font-weight:400;
+    line-height:1.4;
+  }
+  header h3 span, header h3 b{ font-weight:700; }
+
+  /* Headline (caixa branca acima do vídeo) */
+  .vsl-headline{
+    max-width:320px;
+    margin:0 auto 1.25rem;
+    padding:20px 16px 22px;
+    background:#fff;
+    font-family:'Poppins', 'Montserrat', sans-serif;
+    text-transform:uppercase;
+    color:#000;
+  }
+  .vsl-headline .title{
+    margin:0;
+    font-weight:700;
+    font-size:18px;
+    line-height:1.45;
+  }
+  .vsl-headline .title .red{ color:#ff3b3b; }
+  .vsl-headline .sub{
+    margin:14px 0 0;
+    font-weight:400;
+    font-size:15px;
+  }
+
+  /* Vídeo */
+  .player-container{
+    max-width:320px;
+    margin:0 auto;
+  }
+  .video-placeholder{
+    width:100%;
+    aspect-ratio:9/16;
+    background:#000;
+    color:#fff;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    font-weight:700;
+    text-align:center;
+    padding:20px;
+  }
+  .video-placeholder small{ font-weight:400; opacity:.8; }
+
+  header .volume-notice{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    margin:1.5625rem 0 0;
+    font-size:.9375rem;
+    font-weight:600;
+    gap:.5rem;
+  }
+  header .volume-notice img{ width:1.5rem; }
+
+  /* ===== Bloco de texto (no lugar da foto) ===== */
+  .references{ max-width:500px; margin:0 auto 10px; text-align:center; }
+  .references h4{
+    width:280px;
+    margin:0 auto 20px;
+    padding:10px 25px;
+    border-radius:8px;
+    background-color:#226198;
+    color:#fff;
+    font-size:19px;
+    font-weight:700;
+  }
+  .references .ref-text{
+    margin:0 auto;
+    max-width:420px;
+    color:#000;
+    font-size:1.05rem;
+    font-weight:600;
+    line-height:1.45;
+  }
+  .references .ref-text strong{ color:#226198; font-weight:800; }
+
+  /* ===== Comentários estilo Facebook ===== */
+  .comentarios{ max-width:57.5rem; margin:auto; font-family:"Segoe UI Historic","Segoe UI",Helvetica,Arial,sans-serif; font-size:.8125rem; }
+  .comentarios .fb-heading{ display:flex; flex-direction:column; align-items:flex-start; margin:0 0 .625rem; color:#555; font-size:1.125em; font-weight:400; gap:.375rem; text-transform:uppercase; }
+  .comentarios .fb-heading span{ display:none; }
+  .comentarios .comments-container{ display:flex; flex-direction:column; padding:1.25em; border:.0625em solid #e9e9e9; border-radius:1.25em; gap:1.25em; }
+  .comentarios .comment{ display:flex; position:relative; justify-content:flex-start; align-items:flex-start; width:100%; max-width:100%; gap:.625em; }
+  .comentarios .comment.answer{ max-width:calc(100% - 3.625em); margin-bottom:.75em; margin-left:3.625em; }
+  .comentarios .comment.answer + .answer{ margin-top:-0.75em; }
+  .comentarios .comment .user-avatar{ max-width:3em; max-height:3em; border-radius:1.5625em; object-fit:cover; }
+  .comentarios .comment .comment-data{ width:100%; }
+  .comentarios .comment .comment-data .user{ padding:.375em .75em .75em; border-radius:.75em; background-color:#e9e9e9; color:#050505; font-weight:400; }
+  .comentarios .comment .comment-data .user .name{ max-width:max-content; margin:0; color:#365899; font-weight:700; cursor:pointer; }
+  .comentarios .comment .comment-data .user .text{ margin:0; color:#050505; font-size:1.3em; font-weight:400; }
+  .comentarios .comment .comment-data .buttons{ display:flex; justify-content:flex-start; align-items:center; margin:.125em 0 0 .75em; gap:.3125em; }
+  .comentarios .comment .comment-data .buttons time,
+  .comentarios .comment .comment-data .buttons like,
+  .comentarios .comment .comment-data .buttons answer,
+  .comentarios .comment .comment-data .buttons span{ color:#888; font-size:.75em; user-select:none; }
+  .comentarios .comment .comment-data .buttons like,
+  .comentarios .comment .comment-data .buttons answer{ font-weight:600; cursor:pointer; }
+  .comentarios .comment .comment-data .buttons like[liked]{ color:#365899; }
+  .comentarios .comment .comment-data .buttons answer{ position:relative; cursor:default; }
+  .comentarios .comment .comment-data .buttons answer:hover::after{
+    content:"Entre na sua conta para comentar.";
+    position:absolute; top:-0.625em; left:50%; z-index:10; width:11.25em; padding:.375em; border-radius:.25em;
+    background-color:#e9e9e9; color:#4c4c4c; box-shadow:.125em .125em .5em .125em rgba(0,0,0,.18);
+    font-weight:400; text-align:center; transform:translate(-50%,-100%);
+  }
+  .comentarios .comment .comment-data .buttons answer:hover::before{
+    content:""; position:absolute; top:-0.625em; left:50%; z-index:11; width:0; height:0;
+    border-top:.5em solid #e9e9e9; border-right:.5em solid transparent; border-left:.5em solid transparent;
+    filter:drop-shadow(0 .1875em .125em rgba(0,0,0,.1)); transform:translateX(-50%);
+  }
+  .comentarios .comment likes{
+    display:flex; position:absolute; right:0; bottom:-0.625em; align-items:center;
+    padding:.0625em .25em .0625em 0; border:.125em solid #eaebef; border-radius:6.25em;
+    background-color:#fff; color:#888; font-size:.875em; line-height:1;
+  }
+  .comentarios .comment likes::before{ content:url("images/like.png"); cursor:pointer; }
+  .comentarios .comments-closed{ margin:.9375em 0 0; color:#555; font-size:.875em; font-weight:600; text-align:center; }
+
+  /* ===== Rodapé ===== */
+  footer{ display:flex; flex-direction:column; justify-content:center; align-items:center; margin:12.5rem 0 0 0; background-color:#161616; gap:.625rem; }
+  footer .disclaimer{ max-width:60rem; margin:0 auto .625rem; padding:0 .875rem; color:#fff; font-size:.7rem; font-weight:400; line-height:1.4; text-align:center; }
+  footer a{ color:#fff; font-size:.8rem; font-weight:500; text-decoration:none; }
+
+  @media (min-width:320px){ html{ font-size:80%; } }
+  @media (min-width:375px){ html{ font-size:85%; } }
+  @media (min-width:425px){ html{ font-size:100%; } }
+  @media (min-width:576px){
+    header h3{ font-size:1.0625rem; }
+    .references h4{ width:fit-content; padding:14px 40px; font-size:24px; }
+    .comentarios{ font-size:1rem; }
+    .comentarios .fb-heading{ flex-direction:row; align-items:center; }
+    .comentarios .fb-heading span{ display:inline; }
+    .comentarios .comment likes{ bottom:0; }
+  }
+  @media (min-width:992px){
+    header .header-container, section, footer{ padding:2.5rem 1.25rem; }
+    header .header-container{ padding-top:0; }
+    header h3{ font-size:1.1875rem; }
+    footer{ margin:0; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h3 class="viewers">
+    <b>589</b> Pessoas estão assistindo à esse vídeo. <br>
+    Devido a alta demanda de acessos, garantimos este vídeo somente até: <span></span>
+  </h3>
+
+  <div class="header-container">
+    <div class="vsl-headline">
+      <p class="title">Cientistas de <span class="red">Oxford</span> revelam: <span class="red">exercício caseiro</span> que silencia o <span class="red">zumbido</span> em poucos minutos</p>
+      <p class="sub">(Sem remédios nem aparelho)</p>
+    </div>
+
+    <div class="player-container">
+      <!-- ===== COLE AQUI O EMBED DA SUA VSL ===== -->
+      <div class="video-placeholder">
+        VSL aqui
+        <small>Cole o embed do vídeo no lugar deste bloco</small>
+      </div>
+      <!-- ===== FIM DO EMBED ===== -->
+    </div>
+
+    <p class="volume-notice">
+      <img src="images/volume.svg" width="24" height="24" alt="Volume">
+      Por favor, verifique se o som está ligado.
+    </p>
+  </div>
+</header>
+
+<section class="references">
+  <h4>Referências Científicas</h4>
+  <!-- No original aqui tinha uma foto; trocada por texto nas mesmas cores -->
+  <p class="ref-text"><strong>Milhares de pessoas</strong> já assistiram a este vídeo e aplicaram o exercício em casa.</p>
+</section>
+
+<section class="comentarios">
+  <h2 class="fb-heading"><b>523 comentários</b> <span>-</span> <small>Exibindo os 23 mais relevantes</small></h2>
+
+  <div class="comments-container">
+
+    <div class="comment" data-comment-id="1">
+      <img class="user-avatar" width="64" height="64" src="images/5.png" alt="">
+      <div class="comment-data">
+        <div class="user"><p class="name">Régis Coelho</p><p class="text">Ainda bem que eu vi o vídeo até o final. Fico feliz demais Muito obrigado. por ter descoberto, fiz o teste e em 3 dias já não estava escutando mais nada, zumbido nunca mais!.</p></div>
+        <div class="buttons"><like>Curtir</like><span>·</span><answer>Responder</answer><span>·</span><time>21 min</time></div>
+      </div>
+      <likes>38</likes>
+    </div>
+
+    <div class="comment answer" data-comment-id="2">
+      <img class="user-avatar" width="64" height="64" src="images/7.png" alt="">
+      <div class="comment-data">
+        <div class="user"><p class="name">Ignácio Belmonte</p><p class="text">O negócio funciona de verdade</p></div>
+        <div class="buttons"><like>Curtir</like><span>·</span><answer>Responder</answer><span>·</span><time>1 min</time></div>
+      </div>
+      <likes>7</likes>
+    </div>
+
+    <div class="comment" data-comment-id="3">
+      <img class="user-avatar" width="64" height="64" src="images/8.png" alt="">
+      <div class="comment-data">
+        <div class="user"><p class="name">João Paulo</p><p class="text">No início eu duvidava muito, até porque já tinha tentado de tudo antes Mas mesmo assim resolvi dar uma chance e fiquei impressionado,no primeira dia ja senti o zumbido mais fraco!</p></div>
+        <div class="buttons"><like>Curtir</like><span>·</span><answer>Responder</answer><span>·</span><time>3 hr</time></div>
+      </div>
+      <likes>219</likes>
+    </div>
+
+    <div class="comment" data-comment-id="4">
+      <img class="user-avatar" width="64" height="64" src="images/13.png" alt="">
+      <div class="comment-data">
+        <div class="user"><p class="name">Lucas de Souza</p><p class="text">Tava querendo saber se funcionava de verdade e agora vendo todos esses comentários positivos, já sei a resposta. Mto obg gente!!</p></div>
+        <div class="buttons"><like>Curtir</like><span>·</span><answer>Responder</answer><span>·</span><time>51 min</time></div>
+      </div>
+      <likes>24</likes>
+    </div>
+
+    <div class="comment" data-comment-id="5">
+      <img class="user-avatar" width="64" height="64" src="images/15.png" alt="">
+      <div class="comment-data">
+        <div class="user"><p class="name">Roger Santos Lima</p><p class="text">Estou surpreso como esse protocolo funciona mesmo! Duvidava que realmente ia funcionar, estou usando há 30 dias , incrivél como minha mente está limpa e minha vida melhorou.</p></div>
+        <div class="buttons"><like>Curtir</like><span>·</span><answer>Responder</answer><span>·</span><time>49 min</time></div>
+      </div>
+      <likes>14</likes>
+    </div>
+
+    <div class="comment" data-comment-id="6">
+      <img class="user-avatar" width="64" height="64" src="images/18.png" alt="">
+      <div class="comment-data">
+        <div class="user"><p class="name">Hugo Motta</p><p class="text">Eu realmente precisava desse truque para retomar minha, nao sabia mais o que fazer. o vídeo demora um pouco, mas depois que é revelado o truque eu fiquei surpreso pq funciona de verdade!obrigado Doutor!</p></div>
+        <div class="buttons"><like>Curtir</like><span>·</span><answer>Responder</answer><span>·</span><time>45 min</time></div>
+      </div>
+      <likes>102</likes>
+    </div>
+
+    <div class="comment" data-comment-id="7">
+      <img class="user-avatar" width="64" height="64" src="images/19.png" alt="">
+      <div class="comment-data">
+        <div class="user"><p class="name">Rodrigo Prestes</p><p class="text">Depois que completei 46 anos, comecei a sofrer com o zumbido, o que me fazia sempre ficar estressado, sem foco no que estava fazendo o que afetou muito minha vida.. Agora, depois de usar sua solução, tudo isso acabou! Eu retomei o controle da minha vida. Realmente funciona, eu recomendo mto</p></div>
+        <div class="buttons"><like>Curtir</like><span>·</span><answer>Responder</answer><span>·</span><time>44 min</time></div>
+      </div>
+      <likes>23</likes>
+    </div>
+
+    <div class="comment" data-comment-id="8">
+      <img class="user-avatar" width="64" height="64" src="images/21.png" alt="">
+      <div class="comment-data">
+        <div class="user"><p class="name">Julio Martins</p><p class="text">Você devia mostrar esse truque para todo mundo! Ele funciona mesmo!</p></div>
+        <div class="buttons"><like>Curtir</like><span>·</span><answer>Responder</answer><span>·</span><time>2 min</time></div>
+      </div>
+      <likes>5</likes>
+    </div>
+
+    <div class="comment" data-comment-id="9">
+      <img class="user-avatar" width="64" height="64" src="images/22.png" alt="">
+      <div class="comment-data">
+        <div class="user"><p class="name">Emanuel Andrade</p><p class="text">Eu sofria com um barulho que parecia um grito diziam que eu ia ficar surdo, só gastei dinheiro com médico e não ajudaram em nada, hoje faz 5 dias de protocolo e ja posso dizer que não escuto mais esse grito graças a Deus.</p></div>
+        <div class="buttons"><like>Curtir</like><span>·</span><answer>Responder</answer><span>·</span><time>6 hr</time></div>
+      </div>
+      <likes>28</likes>
+    </div>
+
+    <div class="comment answer" data-comment-id="10">
+      <img class="user-avatar" width="64" height="64" src="images/24.png" alt="">
+      <div class="comment-data">
+        <div class="user"><p class="name">Wagner Barbosa</p><p class="text">Ja tento varios tratamentos a 5 anos, será que funciona?</p></div>
+        <div class="buttons"><like>Curtir</like><span>·</span><answer>Responder</answer><span>·</span><time>22 min</time></div>
+      </div>
+      <likes>16</likes>
+    </div>
+
+    <div class="comment answer" data-comment-id="11">
+      <img class="user-avatar" width="64" height="64" src="images/25.png" alt="">
+      <div class="comment-data">
+        <div class="user"><p class="name">Roberto Ivano</p><p class="text">Wagner eu sofria fazia 12 anos. Esse metodo foi a única tentativa que deu certo pra mim. Pode testar, vc vai ver como funciona!</p></div>
+        <div class="buttons"><like>Curtir</like><span>·</span><answer>Responder</answer><span>·</span><time>19 min</time></div>
+      </div>
+      <likes>11</likes>
+    </div>
+
+    <div class="comment" data-comment-id="12">
+      <img class="user-avatar" width="64" height="64" src="images/26.png" alt="">
+      <div class="comment-data">
+        <div class="user"><p class="name">Marcos Gustavo</p><p class="text">Já fazia anos que eu não conseguia ter paz e não sabia o que era silêncio, tava sempre confuso e me esquecendo de tudo, achei que era alzheimer, mas era apenas o zumbido me deixando louco, hoje faz 10 dias que não escuto nada e estou muito lúcido, obrigado Dr Alberto.</p></div>
+        <div class="buttons"><like>Curtir</like><span>·</span><answer>Responder</answer><span>·</span><time>17 min</time></div>
+      </div>
+      <likes>18</likes>
+    </div>
+
+    <div class="comment answer" data-comment-id="13">
+      <img class="user-avatar" width="64" height="64" src="images/27.png" alt="">
+      <div class="comment-data">
+        <div class="user"><p class="name">João Pedro</p><p class="text">Valeu, vou testar também!</p></div>
+        <div class="buttons"><like>Curtir</like><span>·</span><answer>Responder</answer><span>·</span><time>9 min</time></div>
+      </div>
+      <likes>14</likes>
+    </div>
+
+    <div class="comment" data-comment-id="14">
+      <img class="user-avatar" width="64" height="64" src="images/28.png" alt="">
+      <div class="comment-data">
+        <div class="user"><p class="name">Otavio Serra</p><p class="text">Fazia tempo que estava procurando isso, sorte que achei de novo</p></div>
+        <div class="buttons"><like>Curtir</like><span>·</span><answer>Responder</answer><span>·</span><time>8 min</time></div>
+      </div>
+      <likes>5</likes>
+    </div>
+
+    <div class="comment" data-comment-id="15">
+      <img class="user-avatar" width="64" height="64" src="images/29.png" alt="">
+      <div class="comment-data">
+        <div class="user"><p class="name">Eduardo Pereira</p><p class="text">Quero agradecer, por me mostrar esse método que me deixou em paz de um jeito que eu não ficava a anos, é como se você tivesse me tirado de uma prisão!</p></div>
+        <div class="buttons"><like>Curtir</like><span>·</span><answer>Responder</answer><span>·</span><time>3 min</time></div>
+      </div>
+      <likes>1</likes>
+    </div>
+
+    <div class="comment" data-comment-id="16">
+      <img class="user-avatar" width="64" height="64" src="images/30.png" alt="">
+      <div class="comment-data">
+        <div class="user"><p class="name">José Machado</p><p class="text">eu sofria com a mesma coisa que vocês minha esposa já tava pra me deixar dizendo que eu estava ficando louco. Esse truque foi minha única tentativa que deu certo, você vai ver como funciona.</p></div>
+        <div class="buttons"><like>Curtir</like><span>·</span><answer>Responder</answer><span>·</span><time>59 min</time></div>
+      </div>
+      <likes>152</likes>
+    </div>
+
+    <div class="comment" data-comment-id="18">
+      <img class="user-avatar" width="64" height="64" src="images/32.png" alt="">
+      <div class="comment-data">
+        <div class="user"><p class="name">Hélio Braga</p><p class="text">No início eu não acreditei, mas os resultados falam por si. Lutando com o zumbido e noites mal dormidas, o tratamento foi o único que me trouxe solução</p></div>
+        <div class="buttons"><like>Curtir</like><span>·</span><answer>Responder</answer><span>·</span><time>14 min</time></div>
+      </div>
+      <likes>2</likes>
+    </div>
+
+    <div class="comment" data-comment-id="19">
+      <img class="user-avatar" width="64" height="64" src="images/33.png" alt="">
+      <div class="comment-data">
+        <div class="user"><p class="name">Marcos Antonio Almeida</p><p class="text">Esse tratamento não tem preço, ganhei minha vida de volta</p></div>
+        <div class="buttons"><like>Curtir</like><span>·</span><answer>Responder</answer><span>·</span><time>4 min</time></div>
+      </div>
+      <likes>1</likes>
+    </div>
+
+    <div class="comment" data-comment-id="20">
+      <img class="user-avatar" width="64" height="64" src="images/34.png" alt="">
+      <div class="comment-data">
+        <div class="user"><p class="name">Marcio Silva</p><p class="text">Hoje eu finalmente parei de sofrer com aquele inferno na minha cabeça, eu não acordo mais estressado ja, mas sim feliz de estar em silêncio!</p></div>
+        <div class="buttons"><like>Curtir</like><span>·</span><answer>Responder</answer><span>·</span><time>8 min</time></div>
+      </div>
+      <likes>56</likes>
+    </div>
+
+  </div>
+
+  <h4 class="comments-closed">Entre na sua conta para comentar.</h4>
+</section>
+
+<footer>
+  <p class="disclaimer">
+    <span id="ano"></span> Copyright ©. Todos os direitos reservados.<br><br>
+    Todo o conteúdo deste site, incluindo fotos, imagens, logotipos, marcas e layout, é de propriedade exclusiva deste site e protegido por leis de direitos autorais e propriedade intelectual. A reprodução, modificação ou distribuição sem autorização expressa é proibida.
+  </p>
+  <a class="privacy-policy"><u>Política de privacidade</u></a>
+  <a class="terms-of-use"><u>Termos de uso</u></a>
+  <a class="terms-of-use"><u>Política de Envio e Estorno</u></a>
+  <a class="terms-of-use"><u>Aviso Legal</u></a>
+</footer>
+
+<script>
+  // Curtir / descurtir comentários (salva no navegador)
+  function setLike(comment, on){
+    var like = comment.querySelector('like');
+    var likes = comment.querySelector('likes');
+    var n = Number(likes.innerText);
+    if (on){ like.innerText = 'Descurtir'; like.setAttribute('liked',''); likes.innerText = n + 1; }
+    else   { like.innerText = 'Curtir'; like.removeAttribute('liked'); likes.innerText = n - 1; }
+  }
+  function getLiked(){ try { return JSON.parse(localStorage.likedComments || '[]'); } catch(e){ return []; } }
+  function saveLiked(v){ try { localStorage.likedComments = JSON.stringify(v); } catch(e){} }
+
+  var liked = getLiked();
+  liked.forEach(function(id){
+    var c = document.querySelector('[data-comment-id="' + id + '"]');
+    if (c) setLike(c, true);
+  });
+  document.querySelectorAll('like').forEach(function(el){
+    el.addEventListener('click', function(){
+      var c = this.closest('.comment');
+      var id = c.getAttribute('data-comment-id');
+      var on = this.innerText === 'Curtir';
+      setLike(c, on);
+      liked = on ? liked.concat(id) : liked.filter(function(x){ return x !== id; });
+      saveLiked(liked);
+    });
+  });
+
+  // Pessoas assistindo (sobe aos poucos, mínimo 589)
+  (function(){
+    var min = 589, el = document.querySelector('.viewers b');
+    function read(){ try { return Number(localStorage.viewers) || min; } catch(e){ return min; } }
+    el.textContent = read();
+    setInterval(function(){
+      var v = read() + Math.floor(Math.random() * 10) - 2;
+      if (v <= min) v += Math.floor(Math.random() * 15);
+      try { localStorage.viewers = v; } catch(e){}
+      el.textContent = v;
+    }, 5000);
+  })();
+
+  // Data de hoje e ano no rodapé
+  document.querySelector('.viewers span').innerText = new Date().toLocaleDateString('pt-BR');
+  document.getElementById('ano').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
